@@ -27,6 +27,8 @@ figure(1)
 visualize(w, msh)
 hold on
 
+Asingle = A;
+
 %% Split solution
 
 msh1 = bofGrid(0.0, 0.5 , ny/2);
@@ -41,8 +43,8 @@ bp2 = zeros(msh2.mp1,1);
 [coef1, bp1] = implicit_bndr(coef1, msh1, bp1, par, true, false);
 [coef2, bp2] = implicit_bndr(coef2, msh2, bp2, par, false, true);
 
-% coef1 = rsi_bndr(coef1,msh1,par,true);
-% coef2 = rsi_bndr(coef2,msh2,par,false);
+coef1 = rsi_bndr(coef1,msh1,par,true);
+coef2 = rsi_bndr(coef2,msh2,par,false);
 
 [A11, b1] = assembleEquation(msh1, coef1, bp1, true);
 [A22, b2] = assembleEquation(msh2, coef2, bp2, false);
@@ -90,7 +92,7 @@ for iter = 1:maxIter
 end
 
 w1 = [2.0*par.fsth - w(1); w(1:end/2)];
-w2 = [w(end/2+1:end); 2.0*par.fnth-w(end-1)];
+w2 = [w(end/2+1:end); 2.0*par.fnth-w(end)];
 w1p = 0.5*(w1(1:end-1) + w1(2:end));
 w2p = 0.5*(w2(1:end-1) + w2(2:end));
 
