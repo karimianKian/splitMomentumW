@@ -16,17 +16,23 @@ function coef = rsi_bndr(coef,msh,par,first_proc)
         ijk = j;
         ijks = ijk - 1;
         gamrs = gam*rm(j)/dy(j);
-        as(ijk) = gamrs/rdify(j);
+        as(ijk) = gamrs;     
         ap(ijk) = as(ijk);
+        ap(ijks) = ap(ijks) - an(ijks);
         an(ijks) = 0.0;
+        ap(ijks) = ap(ijks)*rdify(j-1);
+        as(ijks) = as(ijks)*rdify(j-1);
     else
         j = 1;
         ijk = j;
         ijkn = ijk + 1;
         gamrn = gam*rm(j+1)/dy(j+1);
-        an(ijk) = gamrn/rdify(j);
+        an(ijk) = gamrn;
         ap(ijk) = an(ijk);
+        ap(ijkn) = ap(ijkn) - as(ijkn);
         as(ijkn) = 0.0;
+        ap(ijkn) = ap(ijkn)*rdify(j+1);
+        an(ijkn) = an(ijkn)*rdify(j+1);
     end
     
     coef.ap = ap;

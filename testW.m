@@ -1,3 +1,9 @@
+% -------------------------------------------------------------------------
+% TEST w - momentum balance in case of a complete rotational flow
+% Authors: Dr. Fabian Sewerin \and Kian Karimian
+% Date   : 07.03.2023
+% -------------------------------------------------------------------------
+
 clear; close all;
 
 y1  = 0.0;
@@ -63,8 +69,10 @@ c1(msh1.mp1) = 0.5;
 c2(1)   = -0.5;
 c2(2)   = -0.5;
 
-lagrMult = 0.0;
-rsiPen = 1e3;
+j = msh1.mp1;
+lagrMultExact  = -2*par.gam*msh1.rm(msh1.mp1)/msh1.dy(msh1.mp1)*par.omegax*(msh1.r(msh1.mp1)-msh1.r(msh1.m));
+lagrMult = lagrMultExact;
+rsiPen = 1;
 
 A = [A11 zeros(size(A11)); zeros(size(A11)) A22];
 
@@ -97,18 +105,7 @@ w1p = 0.5*(w1(1:end-1) + w1(2:end));
 w2p = 0.5*(w2(1:end-1) + w2(2:end));
 
 figure(1)
-plot(msh1.rm(2:end-1),w1p,'r') 
+plot(msh1.rm(2:end-1), w1p, 'r*') 
 hold on
-plot(msh2.rm(2:end-1),w2p,'b')
-
-figure()
-plot(w)
-
-
-
-
-
-
-
-
+plot(msh2.rm(2:end-1), w2p, 'b*')
 
