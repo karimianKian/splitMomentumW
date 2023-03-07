@@ -5,7 +5,7 @@ function msh = bofGrid(y1,y2,ny)
     mp2 = ny + 3;
 
     yf(2:mp1) = linspace(y1, y2, ny + 1);
-    yf(1) = yf(2) - yf(3);
+    yf(1) = yf(2) - (yf(3)-yf(2));
     yf(mp2) = yf(mp1) + (yf(mp1) - yf(m));
     
     y = 0.5*(yf(1:end-1)+yf(2:end));

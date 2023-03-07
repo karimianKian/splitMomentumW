@@ -2,7 +2,7 @@ clear; close all;
 
 y1  = 0.0;
 y2  = 1.0;
-ny  = 30;
+ny  = 10;
 
 msh = bofGrid(y1,y2,ny);
 
@@ -23,8 +23,9 @@ w(2:msh.m) = A\b;
 
 w = bndrSet(par, msh, w);
 
-figure()
+figure(1)
 visualize(w, msh)
+hold on
 
 %% Split solution
 
@@ -40,8 +41,8 @@ bp2 = zeros(msh2.mp1,1);
 [coef1, bp1] = implicit_bndr(coef1, msh1, bp1, par, true, false);
 [coef2, bp2] = implicit_bndr(coef2, msh2, bp2, par, false, true);
 
-coef1 = rsi_bndr(coef1,msh1,par,true);
-coef2 = rsi_bndr(coef2,msh2,par,false);
+% coef1 = rsi_bndr(coef1,msh1,par,true);
+% coef2 = rsi_bndr(coef2,msh2,par,false);
 
 [A11, b1] = assembleEquation(msh1, coef1, bp1, true);
 [A22, b2] = assembleEquation(msh2, coef2, bp2, false);
@@ -61,7 +62,7 @@ c2(1)   = -0.5;
 c2(2)   = -0.5;
 
 lagrMult = 0.0;
-rsiPen = 1e1;
+rsiPen = 1e3;
 
 A = [A11 zeros(size(A11)); zeros(size(A11)) A22];
 
@@ -93,7 +94,7 @@ w2 = [w(end/2+1:end); 2.0*par.fnth-w(end-1)];
 w1p = 0.5*(w1(1:end-1) + w1(2:end));
 w2p = 0.5*(w2(1:end-1) + w2(2:end));
 
-figure()
+figure(1)
 plot(msh1.rm(2:end-1),w1p,'r') 
 hold on
 plot(msh2.rm(2:end-1),w2p,'b')
